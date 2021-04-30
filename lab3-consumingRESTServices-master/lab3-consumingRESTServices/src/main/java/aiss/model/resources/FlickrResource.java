@@ -19,14 +19,12 @@ public class FlickrResource {
 	private static final Logger log = Logger.getLogger(FlickrResource.class.getName());
 
 	
-	public PhotoSearch getFlickrPhotos(String artist) throws UnsupportedEncodingException{
-		
-		String uri = "https://api.flickr.com/services/rest/?method=flickr.galleries.getPhotos&api_key="+FLICKR_API_KEY+"&gallery_id=66911286-72157647277042064&format=json&nojsoncallback=1";
-		log.log(Level.FINE, "NEWS URI: "+uri);
+	public PhotoSearch getFlickrPhotos(String query) throws UnsupportedEncodingException{
+		String uri = "https://www.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=" + URLEncoder.encode(FLICKR_API_KEY, "UTF-8") + "&format=json&nojsoncallback=1&text="+query;
+		uri = "https://www.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key="+FLICKR_API_KEY+"&format=json&nojsoncallback=1&text="+query+"&content_type=1&page=1&per_page=20";
+		log.log(Level.FINE, "MOVIES URI: " + uri);
 		ClientResource cr = new ClientResource(uri);
-		PhotoSearch m = cr.get(PhotoSearch.class);
-	    return m;
-		
+		return cr.get(PhotoSearch.class);
 	}
 	
 }

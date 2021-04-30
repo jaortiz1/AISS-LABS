@@ -8,32 +8,26 @@ import java.util.List;
 
 import org.junit.Test;
 
+import aiss.model.flicker.Photo;
+import aiss.model.flicker.PhotoSearch;
 import aiss.model.omdb.MovieSearch;
 import aiss.model.omdb.Search;
 
 public class FlickrTest {
 	@Test
 	public void getPhotosTest() throws UnsupportedEncodingException {
-		String title = "star wars";
-		OMDbResource omdbR = new OMDbResource();
-		MovieSearch omdbResults = omdbR.getMovies(title);
-		List<Search> movies = omdbResults.getSearch();
-		
-		
-		assertNotNull("The search returned null", omdbResults);
-		assertNotNull("The search returned null", movies);
-		assertFalse("The number of albums of " + title + " is zero", movies.size()==0);
-		
-		System.out.println("The search for " + title + "'s albums returned " + omdbResults.getSearch().size() + " movies.");
-		
-		//Print movies data
-		for(Search movie : movies) {
-			System.out.println("Movie title: " + movie.getTitle());
-			System.out.println(movie.getPoster());
-			System.out.println(movie.getType());
-			System.out.println(movie.getYear());
-			System.out.println("========================================================================================================================");
+		FlickrResource r = new FlickrResource();
+		PhotoSearch p = r.getFlickrPhotos("Star wars");
+		List<Photo> photos =p.getPhotos().getPhoto();
+		assertNotNull("El valor es nullo", p);
+		assertNotNull("la busqueda devolvio nullo");
+		Integer i = 0;
+		for (Photo px : photos) {
+			System.out.println(i+") "+px.getTitle());
+			i++;
+			
 		}
+
 	
 	}
 }
